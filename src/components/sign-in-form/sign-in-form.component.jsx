@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import FormInput from "../form-input/form-input.component";
+import Button from "../button/button.component";
+
+
 import {
   signInWithGoogle,
   createUserDocumenFromAuth,
   signInWithGooglePopup,
   singInAuthWithEmailAndPassword,
-  auth,
 } from "../../utils/firbase/firebase.utils";
-import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
+
 import "./sign-in-form.styles.scss";
 
 const defaultFormFields = {
@@ -19,21 +22,20 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumenFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await singInAuthWithEmailAndPassword(email, password);
-      console.log(response);
+      const { user } = await singInAuthWithEmailAndPassword(email, password);
       resetFormFields();
     } catch (error) {
       switch (error.code) {
@@ -44,7 +46,7 @@ const SignInForm = () => {
           alert("Email does not exist");
           break;
         default:
-            console.log(error)
+          console.log(error);
       }
     }
   };
@@ -80,7 +82,7 @@ const SignInForm = () => {
           <Button buttonType="sign-in" type="submit">
             Sign In
           </Button>
-          <Button type='button' buttonType="google" onClick={signInWithGoogle} >
+          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
             Google Sign In
           </Button>
         </div>
