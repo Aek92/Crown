@@ -17,8 +17,7 @@ import {
   collection,
   writeBatch,
   query,
-  getDocs,
-  querySnaphot
+  getDocs
 } from "firebase/firestore";
 
 const firebaseConfig = {

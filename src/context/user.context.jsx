@@ -2,10 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import {
   onAuthStateChangedListener,
   createUserDocumenFromAuth,
-  signOutUser
 } from "../utils/firbase/firebase.utils";
-
-
 
 //Actual value you want to access
 export const UserContext = createContext({
@@ -19,7 +16,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
-      if(user) {
+      if (user) {
         console.log(user);
         createUserDocumenFromAuth(user);
       }
@@ -31,4 +28,3 @@ export const UserProvider = ({ children }) => {
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
-
